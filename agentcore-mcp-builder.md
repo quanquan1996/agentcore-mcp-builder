@@ -1,7 +1,8 @@
-# AgentCore MCP Server 构建与部署 Skill
+# AgentCore MCP Server 构建与部署指南
 
 > 将任意第三方 API 封装为 MCP Server，部署到 AWS Bedrock AgentCore，通过 Quick Suite 使用。
 > 基于领星 ERP MCP 项目的实战经验提炼，覆盖从 API 分析到生产部署的完整流程。
+> 可作为 AI 编程助手的 System Prompt / Skill / Rule 使用，也可作为人工操作手册。
 
 ---
 
