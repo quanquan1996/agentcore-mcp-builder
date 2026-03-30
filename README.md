@@ -47,7 +47,7 @@
 
 | 工具 | 用法 |
 |------|------|
-| **Kiro** | 复制到 `.kiro/skills/` 目录，聊天中用 `#agentcore-mcp-builder` 引用 |
+| **Kiro** | 复制到 `.kiro/skills/` 目录，或粘贴到 Steering 文件 |
 | **Cursor** | 复制到 `.cursor/rules/` 目录，或粘贴到 Project Rules |
 | **Windsurf** | 复制到 `.windsurfrules` 或粘贴到 Rules |
 | **Claude** | 粘贴到 Project Knowledge 或直接作为对话上下文 |
