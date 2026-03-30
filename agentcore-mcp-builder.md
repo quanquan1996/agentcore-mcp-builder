@@ -653,6 +653,87 @@ requests.post(url, headers=hdrs, json={
 | Token 过期 | access_token 2h 有效 | 客户端自动续约逻辑 |
 | 文件找不到 | AgentCore 无状态 | 生成+上传在同一 tool 调用中完成 |
 
+### 5.5 推荐：安装 AWS Documentation MCP Server
+
+部署过程中遇到 AWS 相关问题（AgentCore、Cognito、IAM、S3 等）时，可以通过 AWS Documentation MCP Server 直接查询官方文档排查问题，无需离开 IDE。
+
+#### 安装前置条件
+
+需要安装 `uv`（Python 包管理器）：
+- pip: `pip install uv`
+- Homebrew: `brew install uv`
+- 其他方式: https://docs.astral.sh/uv/getting-started/installation/
+
+#### 配置方法
+
+在你的 AI IDE 的 MCP 配置文件中添加以下配置：
+
+**Kiro**: `.kiro/settings/mcp.json`（项目级）或 `~/.kiro/settings/mcp.json`（全局）
+**Cursor**: `.cursor/mcp.json`
+**Windsurf**: `~/.codeium/windsurf/mcp_config.json`
+**Claude Desktop**: `~/Library/Application Support/Claude/claude_desktop_config.json`（macOS）或 `%APPDATA%\Claude\claude_desktop_config.json`（Windows）
+
+macOS / Linux 配置：
+
+```json
+{
+  "mcpServers": {
+    "aws-docs": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "autoApprove": [
+        "read_documentation",
+        "search_documentation",
+        "recommend",
+        "read_sections"
+      ]
+    }
+  }
+}
+```
+
+Windows 配置（uvx 可执行文件路径不同）：
+
+```json
+{
+  "mcpServers": {
+    "aws-docs": {
+      "command": "uv",
+      "args": [
+        "tool", "run",
+        "--from", "awslabs.aws-documentation-mcp-server@latest",
+        "awslabs.aws-documentation-mcp-server.exe"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "AWS_DOCUMENTATION_PARTITION": "aws"
+      },
+      "autoApprove": [
+        "read_documentation",
+        "search_documentation",
+        "recommend",
+        "read_sections"
+      ]
+    }
+  }
+}
+```
+
+#### 使用场景
+
+安装后，AI 助手可以在遇到 AWS 问题时自动查询官方文档：
+
+- `agentcore deploy` 报错 → 搜索 AgentCore 部署文档
+- Cognito JWT 验证失败 → 查询 Cognito Client Credentials 配置
+- IAM 权限不足 → 查询所需的 IAM Policy
+- S3 预签名 URL 过期 → 查询 S3 presigned URL 最佳实践
+- VPC 网络不通 → 查询 AgentCore VPC 配置要求
+
+> 项目地址: https://github.com/awslabs/aws-documentation-mcp-server
+
 ---
 
 ## 阶段 6：输出部署信息文档与 Quick Suite 配置建议
